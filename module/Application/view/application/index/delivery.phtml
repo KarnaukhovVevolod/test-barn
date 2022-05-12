@@ -1,0 +1,28 @@
+<div class="row">
+
+    <div class="list-group">
+        <div class="list-group-item">
+            Введите параметры для доставки
+            <br>
+            Быстрая доставка
+            <div class="fast"><?= $url_fastDelivery ?></div>
+            <br>
+            Обычная доставка
+            <div class="regular"><?= $url_regularDelivery  ?></div>
+
+        </div>
+        <div class="list-group-item">
+            <br>
+            <?php $formDelivery = $this->form_delivery; ?>
+            <?php $formDelivery->prepare(); ?>
+            <?= $this->form()->openTag($formDelivery); ?>
+            <?= $this->form($formDelivery) ?>
+            <?= $this->form()->closeTag(); ?>
+            <br>
+        </div>
+        <div class="list-group-item">
+            Ответ:
+            <div class="result_server"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+.switching--templates{
+    float:left;
+}
+.switching--templates a {
+    color:white;
+    padding: 2px;   
+}
+.switching--templates a:hover{
+    color:whitesmoke;
+    cursor: pointer;
+    border:solid 1px #50299e;
+}
+
+.templates--all{
+    float:right;
+}

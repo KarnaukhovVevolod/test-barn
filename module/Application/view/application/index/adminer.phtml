@@ -1,0 +1,182 @@
+
+<h1>Администрирование</h1>
+<div class="row">
+
+
+    <div class="list-group">
+        <div class="list-group-item">
+            <h3>Добавит параметры(цену) на расстояние между складами</h3>
+            <br><br>
+            <?php $formDistance = $this->form_Distance; ?>
+            <?php $formDistance->prepare(); ?>
+            <?= $this->form()->openTag($formDistance); ?>
+            <?= $this->form($formDistance) ?>
+            <?= $this->form()->closeTag(); ?>
+
+            <?php if (isset($data_distance) && $data_distance != null): ?>
+
+                <table>
+                    <caption>Таблица для редактирования параметров  на расстояние между складами</caption>
+                    <tr>
+                        <th>id</th>
+                        <th>Расстояние от км</th>
+                        <th>Расстояние до км</th>
+                        <th>Цена</th>
+                        <th>Коэффиниент для обычной доставки</th>
+                        <th>Доп. параметры</th>
+                        <th>id Транспортной компании</th>
+                        <th>Стандартный коэффициент</th>
+                    </tr>
+                    <?php foreach($data_distance as $distance): ?>
+                        <tr>
+                            <td class="id"><?= $distance['id'] ?></td>
+                            <td><?= $distance['distanceFrom'] ?></td>
+                            <td><?= $distance['distanceUpTo'] ?></td>
+                            <td><?= $distance['price'] ?></td>
+                            <td><?= $distance['coefficient'] ?></td>
+                            <td><?= $distance['dopParam'] ?></td>
+                            <?php if (isset($distance['idTransportCompany']) &&
+                            isset($distance['idTransportCompany']['id'])): ?>
+                            <td><?= $distance['idTransportCompany']['id'] ?></td>
+                            <?php else: ?>
+                            <td><?= null ?></td>
+                            <?php endif; ?>
+                            <td><?= $distance['standartCoefficient'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+        </div>
+
+
+        <div class="list-group-item">
+            <h3>Добавит параметры(цену) на вес посылки</h3>
+            <br><br>
+            <?php $formWeight = $this->form_Weight; ?>
+            <?php $formWeight->prepare(); ?>
+            <?= $this->form()->openTag($formWeight); ?>
+            <?= $this->form($formWeight) ?>
+            <?= $this->form()->closeTag(); ?>
+
+            <?php if (isset($data_weight) && $data_weight != null): ?>
+
+                <table>
+                    <caption>Таблица для редактирования параметров для веса посылки</caption>
+                    <tr>
+                        <th>id</th>
+                        <th>Вес от кг</th>
+                        <th>Вес до кг</th>
+                        <th>Цена</th>
+                        <th>Коэффиниент для обычной доставки</th>
+                        <th>Доп. параметры</th>
+                        <th>id Транспортной компании</th>
+                        <th>Стандартный коэффициент</th>
+                    </tr>
+                    <?php foreach($data_weight as $one): ?>
+                        <tr>
+                            <td class="id"><?= $one['id'] ?></td>
+                            <td><?= $one['weightFrom'] ?></td>
+                            <td><?= $one['weightUpto'] ?></td>
+                            <td><?= $one['price'] ?></td>
+                            <td><?= $one['coefficient'] ?></td>
+                            <td><?= $one['dopParam'] ?></td>
+                            <?php if (isset($one['idTransportCompany']) &&
+                                isset($one['idTransportCompany']['id'])): ?>
+                                <td><?= $one['idTransportCompany']['id'] ?></td>
+                            <?php else: ?>
+                                <td><?= null ?></td>
+                            <?php endif; ?>
+                            <td><?= $one['standartCoefficient'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+
+        </div>
+
+        <div class="list-group-item">
+            <h3>Добавить транспортную компанию</h3>
+            <br><br>
+            <?php $formTransport = $this->form_Transport; ?>
+            <?php $formTransport->prepare(); ?>
+            <?= $this->form()->openTag($formTransport); ?>
+            <?= $this->form($formTransport) ?>
+            <?= $this->form()->closeTag(); ?>
+
+            <?php if (isset($data_transport) && $data_transport != null): ?>
+
+                <table>
+                    <caption>Таблица для редактирования транспортной компании</caption>
+                    <tr>
+                        <th>id</th>
+                        <th>Название компании</th>
+                        <th>Общее кол-во машин компании</th>
+                        <th>Среднее кол-во выполняемых заказов в сутки</th>
+                        <th>Текущее кол-во заказов с быстрой доставкой</th>
+                        <th>Текущее кол-во заказов с обычной доставкой</th>
+                        <th>Доп. инфо. о компании</th>
+                        <th>Дополнительно выделенные места для быстрой доставки</th>
+
+                    </tr>
+                    <?php foreach($data_transport as $one): ?>
+                        <tr>
+                            <td class="id"><?= $one['id'] ?></td>
+                            <td><?= $one['nameCompany'] ?></td>
+                            <td><?= $one['totalNumberCars'] ?></td>
+                            <td><?= $one['averageNumberCar'] ?></td>
+                            <td><?= $one['currentOrdersFastDelivery'] ?></td>
+                            <td><?= $one['currentOrderRegularDelivery'] ?></td>
+                            <td><?= $one['dopInfoCompany'] ?></td>
+                            <td><?= $one['dopNumberFastDeliveryInDay'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+
+        </div>
+        <div class="list-group-item">
+            <h3>Добавить склад</h3>
+            <br><br>
+            <?php $formWarehouses = $this->form_Warehouses; ?>
+            <?php $formWarehouses->prepare(); ?>
+            <?= $this->form()->openTag($formWarehouses); ?>
+            <?= $this->form($formWarehouses) ?>
+            <?= $this->form()->closeTag(); ?>
+
+            <?php if (isset($data_warehouse) && $data_warehouse != null): ?>
+
+                <table>
+                    <caption>Таблица для редактирования склада</caption>
+                    <tr>
+                        <th>id</th>
+                        <th>Название склада</th>
+                        <th>четверть в которой распоожен склад</th>
+                        <th>Расстояние до Центральной точки O</th>
+                        <th>Расстояние до точки А</th>
+                        <th>Расстояние до точки B</th>
+                        <th>Адрес склада</th>
+                        <th>Доп.информация</th>
+
+                    </tr>
+                    <?php foreach($data_warehouse as $one): ?>
+                        <tr>
+                            <td class="id"><?= $one['id'] ?></td>
+                            <td><?= $one['nameWrehouse'] ?></td>
+                            <td><?= $one['quarter'] ?></td>
+                            <td><?= $one['positionRelativeO'] ?></td>
+                            <td><?= $one['positionRelativeA'] ?></td>
+                            <td><?= $one['positionRelativeB'] ?></td>
+                            <td><?= $one['warehouseAddress'] ?></td>
+                            <td><?= $one['warehouseDopinfo'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+
+
+        </div>
+    </div>
+
+</div>
+
+
