@@ -55,4 +55,11 @@ class PackageWeightRepository extends EntityRepository
         return $resultArray;
 
     }
+    public function maxWeight()
+    {
+        $qb = $this->em->createQuery('SELECT MAX(w.weightUpto) FROM Application\Entity\PackageWeight w');
+        ;
+        $resultArray = $qb->getArrayResult();
+        return (float)$resultArray[0][1];
+    }
 }

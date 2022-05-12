@@ -19,7 +19,8 @@ return [
                     'route'    => '/',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
+                        //'action'     => 'index',
+                        'action' => 'delivery'
                     ],
                 ],
             ],/**/

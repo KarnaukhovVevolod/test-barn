@@ -36,8 +36,12 @@ $(function(){
                         }
                     }
                     console.log(respJson);
-                    alert(data);
-                    //$('.result_server')['0'].textContent=data;
+                    if (respJson['error']!="") {
+                        alert("Возникли ошибки!!! "+ data);
+                    } else {
+                        alert("Успешно");
+                    }
+
                     var price='';
                     var date='';
                     var error='';

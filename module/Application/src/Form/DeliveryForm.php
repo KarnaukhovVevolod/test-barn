@@ -105,10 +105,12 @@ class DeliveryForm extends Form
             'name'=>'stock_weight',
             'attributes' =>[
                 'id' => 'id_stock_weight',
-                'class'=>'form-control'
+                'class'=>'form-control',
+                'placeholder'=> '0.15'
             ],
             'options'=> [
-                'label'=> 'Введите вес посылки (кг)',
+                'label'=> 'Введите вес посылки (кг)'
+
             ]
         ]);
 

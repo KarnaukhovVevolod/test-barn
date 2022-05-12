@@ -31,14 +31,24 @@ class DeliveryService
     {
         $distance = $this->getDistanceBetweenWarehouse($data);
         if (isset($distance['error'])) {
-            $distance["price"] = '';
-            $distance["period"] = '';
+            if ($param == 'fast') {
+                $distance["price"] = '';
+                $distance["period"] = '';
+            } else {
+                $distance['coefficient'] = '';
+                $distance['date'] = '';
+            }
             return $distance;
         }
         $day_delivery = $this->getDayDelivery($data, $param);
         if (isset($day_delivery['error'])) {
-            $day_delivery["price"] = '';
-            $day_delivery["period"] = '';
+            if ($param == 'fast') {
+                $day_delivery["price"] = '';
+                $day_delivery["period"] = '';
+            } else {
+                $day_delivery['coefficient'] = '';
+                $day_delivery['date'] = '';
+            }
             return $day_delivery;
         }
 
@@ -47,7 +57,7 @@ class DeliveryService
             $price = $all_cost[0][0]['price']+$all_cost[1][0]['price'];
             $data_result['price'] = $price;
             $data_result['period'] = $day_delivery['success'];
-            $data_result['error'] = 'ошибок нет';
+            $data_result['error'] = '';
         } else {
             $coefficient = 1+$all_cost[0][0]['coefficient']+$all_cost[1][0]['coefficient'];
             $data_result['coefficient'] = $coefficient;

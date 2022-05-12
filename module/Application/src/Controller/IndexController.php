@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace Application\Controller;
 
+use Application\Entity\PackageWeight;
 use Application\Form\DeliveryForm;
 use Application\Form\PackageWeightForm;
 use Application\Form\TransportCompanyForm;
 use Application\Form\WarehousesForm;
 use Application\Service\DataBaseService;
 use Application\Service\DeliveryService;
+use Doctrine\ORM\EntityManager;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Application\Form\DistanceSendingForm;
 
 class IndexController extends AbstractActionController
 {
+    /**
+     * @var EntityManager
+     */
     private $entityManager;
     private $db_service;
     private $delivery_service;
@@ -95,7 +100,6 @@ class IndexController extends AbstractActionController
 
     public function fastDeliveryAction()
     {
-        $f ='';
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data_transport = $this->db_service->getData('transport');
@@ -105,6 +109,20 @@ class IndexController extends AbstractActionController
             $form->setData($data);
             if ($form->isValid()) {
                 $validData = $form->getData();
+                if ($validData['stock_1'] == $validData['stock_2']) {
+                    echo json_encode( ['error' =>'Вы выбрали один и тот же склад для отправления и доставки',
+                        "price" => '',
+                        "period" => ''], JSON_UNESCAPED_UNICODE);
+                    die();
+                } elseif ($validData['stock_weight'] >
+                    $weight = $this->entityManager->getRepository(PackageWeight::class)->maxWeight()
+                ) {
+                    $error ='Введите значение в поле вес не более '. round($weight,2);
+                    echo json_encode( ['error'=>$error,
+                        "price" => '',
+                        "period" => ''], JSON_UNESCAPED_UNICODE);
+                    die();
+                }
                 $data_result = $this->
                 delivery_service->getDelivery($validData);
                 echo json_encode($data_result);
@@ -113,14 +131,12 @@ class IndexController extends AbstractActionController
                 $message = $form->getMessages();
                 echo json_encode($message);
                 die();
-                //echo '<pre>'.print_r($message,true).'</pre>';
             }
 
         }
     }
     public function regularDeliveryAction()
     {
-        $r = '';
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data_transport = $this->db_service->getData('transport');
@@ -130,6 +146,20 @@ class IndexController extends AbstractActionController
             $form->setData($data);
             if ($form->isValid()) {
                 $validData = $form->getData();
+                if ($validData['stock_1'] == $validData['stock_2']) {
+                    echo json_encode( ['error' =>'Вы выбрали один и тот же склад для отправления и доставки',
+                        "coefficient" => '',
+                        "date" => ''], JSON_UNESCAPED_UNICODE);
+                    die();
+                } elseif ($validData['stock_weight'] >
+                    $weight = $this->entityManager->getRepository(PackageWeight::class)->maxWeight()
+                ) {
+                    $error ='Введите значение в поле вес не более '. round($weight,2);
+                    echo json_encode( ['error'=>$error,
+                        "price" => '',
+                        "period" => ''], JSON_UNESCAPED_UNICODE);
+                    die();
+                }
                 $data_result = $this->
                 delivery_service->getDelivery($validData, 'regular');
                 echo json_encode($data_result);
@@ -138,7 +168,6 @@ class IndexController extends AbstractActionController
                 $message = $form->getMessages();
                 echo json_encode($message);
                 die();
-                //echo '<pre>'.print_r($message,true).'</pre>';
             }
         }
 
